@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void fileparsecopy(FILE* ifp, FILE* ofp){
     int c;
@@ -21,8 +22,19 @@ void fileparsecopy(FILE* ifp, FILE* ofp){
 int main(int argc, char **argv) {
     FILE * fp;
     const char* prog = argv[0];
+    const char* helpStr = "Usage:\n    file2str [FILE] ...\n\nDescription:\n    Outputs a string that represents the file(s). If no FILE is named, read from STDIN\n";
+    const char* versionStr = "file2string version 1.0.0\nCopyright (C) 2018 Thomas Tay.\nLicence: GPLv3+; GPL version 3 or later\nThis is free software, you are free to change and distribute it\nThere is NO WARRANTY WHATSOEVER\n";
     if(argc == 1) /* no args, copy std input */
         fileparsecopy(stdin, stdout);
+
+    if(strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0){
+        printf("%s", helpStr);
+        return 0;
+    }
+    if(strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0){
+        printf("%s", versionStr);
+        return 0;
+    }
 
     while(--argc > 0){
         if((fp = fopen(*++argv, "r")) == NULL){
