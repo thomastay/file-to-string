@@ -1,21 +1,38 @@
-char * buffer = 0;
-long length;
-FILE * f = fopen (filename, "rb");
+#include <stdio.h>
 
-if (f)
-{
-  fseek (f, 0, SEEK_END);
-  length = ftell (f);
-  fseek (f, 0, SEEK_SET);
-  buffer = malloc (length);
-  if (buffer)
-  {
-    fread (buffer, 1, length, f);
-  }
-  fclose (f);
+void fileparsecopy(FILE* ifp, FILE* ofp){
+    int c;
+    while((c=getc(ifp)) != EOF){
+        if (c == '\n'){
+            putc('\\', ofp);
+            putc('n', ofp);
+        } else if (c == '\t'){
+            putc('\\', ofp);
+            putc('t', ofp);
+        } else if (c == '"'){
+            putc('\'', ofp);
+        }
+        else
+            putc(c, ofp);
+    }
 }
 
-if (buffer)
-{
-  // start to process your data / extract strings here...
+
+int main(int argc, char **argv) {
+    FILE * fp;
+    const char* prog = argv[0];
+    if(argc == 1) /* no args, copy std input */
+        fileparsecopy(stdin, stdout);
+
+    while(--argc > 0){
+        if((fp = fopen(*++argv, "r")) == NULL){
+            fprintf(stderr, "%s: Can't open %s\n", prog, *argv);
+            return 1;
+        } else{
+            fileparsecopy(fp, stdout);
+            fclose(fp);
+        }
+    }
+     return 0;
 }
+
