@@ -55,4 +55,4 @@ help2man -o ../bin/file2string.1 ../bin/file2string
 file2string [FILE] ...
 ```
 
-If no file is specified, read from standard input.
+If no file, or '-' is specified, read from standard input.
