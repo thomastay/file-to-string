@@ -37,6 +37,7 @@ add_custom_target(
     )
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.1
+    DEPENDS ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
     COMMAND help2man ARGS -o ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.1 ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
     COMMENT "Generating man file using help2man"
     VERBATIM
