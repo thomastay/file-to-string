@@ -17,13 +17,14 @@ For Linux, no binary has been compiled, however all Linux distributions come wit
 ## Building from source:
 
 ### Dependencies
-You will need a compiler with C support, CMake 3.0+ (optional), and git.
+You will need a C Compiler (gcc, clang, MSVC, etc), CMake 3.0+ (optional), git, and help2man.
 
 To check, run the following commands on your terminal:
 ```
 cc --version
 cmake --version
 git --version
+help2man --version
 ```
 
 ### Automated building using CMake:
@@ -43,7 +44,9 @@ Run the following command in the source directories
 ```
 git clone https://github.com/thomastay/file-to-string.git
 cd file-to-string
-cc -Wall -Werror -Wpedantic -O2 file2string.c -o bin/file2string
+mkdir bin
+cc -Wall -Wextra -Wpedantic -O2 file2string.c -o bin/file2string
+help2man -o ../bin/file2string.1 ../bin/file2string
 ```
 
 ## Usage
